@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Index Page Handdling{% endblock %}
+
+{% block content %}
+<h1>Hello World</h1>
+<form method='POST' action='{{ url_for("index_hand")}}'>
+  <input type='text' name='username' placeholder="Username">
+  <br>
+  <input type='password' name='password' placeholder="Password">
+  <br>
+  <input type='submit' value='login'>
+</form>
+
+<h1>File Upload</h1>
+<!-- we have to specify the encryption type for forms that recives a file -->
+<form method='POST' action='{{ url_for("file_upload")}}' enctype='multipart/form-data'>
+  <input type="file" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, text/plain" required="required">
+  <input type="submit" value="upload file">
+
+</form>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Index Page{% endblock %}
+
+{% block content %}
+<h1>Hello World</h1>
+    <p>{{ values }}</p>
+    <p>{{ result }}</p>
+    <!-- You can simple show the list, or ...-->
+    <p>{{ myList }}</p>
+    <!-- You can work like this, and use the list in a more powerfull way...-->
+    <ul>
+      {% for item in myList %}
+      <li>{{item}}</li>
+      {% endfor %}
+    </ul>
+    </br>
+    <!-- You can also do conditions like...-->
+    <ul>
+      <b>Only showing list Itens that are divided by 2:</b>
+      {% for item in myList %}
+      {% if item%2 == 0 %}
+      <li>{{item}}</li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    <!-- Redirecting without passing the route, just the function name -->
+    <a href="{{url_for('filters')}}">Filters</a>
+{% endblock %}

@@ -1,0 +1,19 @@
+<!------------------------------------------------------------------>
+<!-- A base html file can be use to be inherited by other files,  -->
+<!-- so you can use base templates in other HTML's files, like	  -->
+<!-- html pages that the head and the bottom stay the same in any -->
+<!-- part of the website					  -->
+<!------------------------------------------------------------------>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title%}Default Value{% endblock %}</title>
+  </head>
+  <body>
+    <h1>We adding blocks, this make the page be dynamically render</h1>
+    {% block content%}{% endblock %}
+  </body>
+</html>

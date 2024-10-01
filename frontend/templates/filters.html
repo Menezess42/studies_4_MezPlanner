@@ -1,0 +1,23 @@
+<!-- Inheriting pages is usefull to not keeping repeting yourself -->
+<!-- Filters -->
+{% extends "base.html" %}
+{% block title %}Other Page{% endblock %}
+
+{% block content %}
+<h1> Filters </h1>
+<p>{{ dibresh }}</p>
+<p>{{ dibresh|upper}}</p>
+<p>{{ dibresh|lower}}</p>
+<p>{{ dibresh|title}}</p>
+<p>{{ dibresh|replace('Hello', 'AAAAAAAA')}}</p>
+<!-- You can create you on filter -->
+<!-- this filter will reverse the string -->
+<p>{{ dibresh|myFilter}}</p>
+<!-- this filter will repeat the string the default amount of times -->
+<p><br>{{ dibresh|myFilter_repet}}</p>
+<!-- this filter will repeat the string the amount of time I pass -->
+<p><br>{{ dibresh|myFilter_repet(5)}}</p>
+<!-- this filter will repeat the string alternating the chars into
+     low and uper case-->
+<p><br>{{ dibresh|alternating_case}}</p>
+{% endblock %}

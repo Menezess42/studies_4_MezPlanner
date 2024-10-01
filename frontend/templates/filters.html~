@@ -1,0 +1,8 @@
+<!-- Inheriting pages is usefull to not keeping repeting yourself -->
+<!-- Filters -->
+{% extends "base.html" %}
+{% block title %}Other Page{% endblock %}
+
+{% block content %}
+<h1> Filters </h1>
+{% endblock %}
