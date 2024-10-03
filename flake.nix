@@ -17,11 +17,12 @@
           curl
 				  python311
 # Project Lib
-				python311Packages.pip
-				  python311Packages.pandas
+          python311Packages.pip
+          python311Packages.pandas
           python311Packages.openpyxl
-				python311Packages.matplotlib
-				python311Packages.flask
+          python311Packages.matplotlib
+          python311Packages.flask
+          python311Packages.sqlalchemy
 # Emacs pyIDE libs
 				python311Packages.jedi
 				python311Packages.black

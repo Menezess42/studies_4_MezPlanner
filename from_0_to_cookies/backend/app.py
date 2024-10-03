@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 @app.route("/hello")
 def hello():
+    """Função hello Word"""
     return "hello world"
 
 
@@ -198,13 +199,15 @@ def file_upload():
 
 # Reading a excel file, reading the file, displaying like html and return as a csv
 from flask import Response
+
+
 @app.route('/convert_csv', methods=['POST'])
 def convert_csv():
     file = request.files['file']
     df = pd.read_excel(file.read())
-    #using response imported from flask
+    # using response imported from flask
     response = Response(
-        df.to_csv(),#what I'm responding with (in this case CSV)
+        df.to_csv(),# what I'm responding with (in this case CSV)
         mimetype='text/csv', # Content type
         headers={
             'Content-Disposition': 'attachment; filename=result.csv'
@@ -212,26 +215,127 @@ def convert_csv():
     )
     return response
 
+import os
+import uuid
+# Reading a excel file, converting to CSV and storing, than feeding
+# the user with a Download HTML page so he can download the csv
+# this is usefull for data analytics
+@app.route('/convert_csv_&_store', methods=['POST'])
+def convert_csv_store():
+    file = request.files['file']
+    df = pd.read_excel(file.read())
+
+    if not os.path.exists('downloads'):
+        os.makedirs('downloads')
+
+    filename = f'{uuid.uuid4}.csv'
+    df.to_csv(os.path.join('downloads', filename))
+    return render_template('download.html', filename=filename)
+
+
+# this function uses teh send_from_directory to fetch for the file
+# in the directory and return back to the user.
+from flask import send_from_directory
+@app.route('/download/<filename>')
+def download(filename):
+    return send_from_directory('downloads', filename, download_name='result.csv')
+
+
+from flask import jsonify
+# Handdling POST using JSON and JS
+@app.route('/handle_post', methods=['POST'])
+def handle_post():
+    greeting = request.json['greeting']
+    name = request.json['name']
+
+    with open('file.txt', 'w') as f:
+        f.write(f'{greeting}, {name}')
+    return jsonify({'message': 'Successfully written!'})
+
+##### Static files and Bootstrap #####
+
+app = Flask(__name__, template_folder='../frontend/templates/',
+            static_folder="../frontend/static",
+            static_url_path="/stc") # you have to pass a URL for static things
+
+@app.route('/index_hello')
+def handle_post():
+    return render_template('index_hello.html', message='Index')
+
+
+########################
+# Sessions and Cookies #
+########################
+
+## Session (are storage in the server side):
+from flask import session
+# In the real world you have to use a good secret_key
+app.secret_key = 'SOME KEY'
+
+@app.route('/set_data')
+def set_data():
+    session['name'] = 'mike'
+    session['other'] = 'AAAA Howrld'
+    return render_template('/index_hello.html',message='Sessions data set.')
+
+@app.route('/get_data')
+def get_data():
+    if 'name' in session.keys() and 'other' in session.keys():
+        name = session['name']
+        other = session['other']
+        return render_template('index_hello.html', message=f'Name:{name} Other:{other}')
+    else:
+        return ''
+#### Alll the script above is hepening in the server side, this is usefull
+#### for sensitive information, because all the informatin stays in the server
+### and not the user machine
+
+# How to clear a session
+@app.route('/clear_session')
+def clear_session():
+    session.clear()
+    return render_template('index_hello.html', message='Session Cleared')
+
+## Cookies (are storege in the client side)
+# At the cookie is in the client side, we have to instruc the browser on
+# how to set the cookie in the client side
+@app.route('/set_cookie')
+def set_cookie():
+    response = make_response(render_template('index_hello.html', message='Cookie set.'))
+    response.set_cookie('cookie_name','cookie_value')
+    return response
+
+@app.route('/get_cookie')
+def get_cookie():
+    cookie_value = request.cookies['cookie_name']
+    return render_template('index_hello.html', message=f'Cookie Value: {cookie_value}')
+
+
+@app.route('/remove_cookie')
+def remove_cookie():
+    response = make_response(render_template('index_hello.html', message='Cookie Removed.'))
+    response.set_cookie('cookie_name',expires=0)
+    return response
+####
+
+## Message flashing (Display a message that flash)
+from flask import request,flash
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    elif request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if username == 'menezess42' and password=='1234':
+            flash('Successful Login!')
+            return render_template('index_hello.html', message='')
+        else:
+            flash('Login fail')
+            return render_template('index_hello.html', message='')
+            
+
 
 if __name__ == '__main__':
     app.run(debug=True)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    

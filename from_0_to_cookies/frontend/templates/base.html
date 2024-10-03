@@ -11,9 +11,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title%}Default Value{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/stc/css/style.css">
   </head>
   <body>
-    <h1>We adding blocks, this make the page be dynamically render</h1>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{message}}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <!-- <h1>We adding blocks, this make the page be dynamically render</h1> -->
     {% block content%}{% endblock %}
   </body>
 </html>
