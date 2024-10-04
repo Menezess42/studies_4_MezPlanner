@@ -15,6 +15,10 @@
 				name = "day-planner-env";
 				buildInputs = with pkgs; [
           curl
+	  sqlite
+	  nodejs
+	  prettierd
+	  emacs
 				  python311
 # Project Lib
           python311Packages.pip
@@ -23,6 +27,8 @@
           python311Packages.matplotlib
           python311Packages.flask
           python311Packages.sqlalchemy
+          python311Packages.flask-sqlalchemy
+          python311Packages.flask-migrate
 # Emacs pyIDE libs
 				python311Packages.jedi
 				python311Packages.black
