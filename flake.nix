@@ -20,7 +20,7 @@
 	  prettierd
 	  emacs
 				  python311
-# Project Lib
+          # Project Lib
           python311Packages.pip
           python311Packages.pandas
           python311Packages.openpyxl
@@ -29,6 +29,8 @@
           python311Packages.sqlalchemy
           python311Packages.flask-sqlalchemy
           python311Packages.flask-migrate
+          python311Packages.flask-login
+          python311Packages.flask-bcrypt
 # Emacs pyIDE libs
 				python311Packages.jedi
 				python311Packages.black
